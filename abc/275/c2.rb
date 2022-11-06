@@ -3,35 +3,45 @@
 S = $stdin.map { |line| line.chomp.split('') }
 
 def length(a, b)
-  (x2 - x1).abs + (y2 - y1).abs
+  x1, y1 = a
+  x2, y2 = b
+  (x2 - x1)**2 + (y2 - y1)**2
 end
 
 def square?(corners)
   a, b, c, d = corners
   # 各点の距離を調べる
-  l1 = length(a, b)
-  l2 = length(b, c)
-  l3 = length(c, d)
-  l4 = length(d, a)
+  lengths = [
+    length(a, b),
+    length(b, c),
+    length(c, d),
+    length(d, a),
+    length(a, c),
+    length(b, d)
+  ].sort
 
-
+  lengths[0] == lengths[1] &&
+    lengths[1] == lengths[2] &&
+    lengths[2] == lengths[3] &&
+    lengths[4] == lengths[5] &&
+    lengths[0] * 2 == lengths[5]
 end
 
-porns = []
+def init_pawns
+  pawns = []
 
-9.times do |i|
-  9.times do |j|
-    if S[i][j] == '#'
-      porns << [i,j]
+  9.times do |i|
+    9.times do |j|
+      pawns << [i, j] if S[i][j] == '#'
     end
   end
+
+  pawns
 end
 
 answer = 0
-porns.combination(4) do |corners|
-  if squre?(corners)
-    answer += 1
-  end
+init_pawns.combination(4) do |corners|
+  answer += 1 if square?(corners)
 end
 
 p answer
