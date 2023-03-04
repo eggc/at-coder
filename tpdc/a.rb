@@ -63,4 +63,6 @@ end
 @dp = DynamicProgramming.new(N + 1, P.sum + 1)
 @dp.fill
 
+p @dp
+
 puts @dp.table.last.count(&:itself)
