@@ -1,22 +1,15 @@
-require 'prime'
-
 N, M = gets.split.map(&:to_i)
+MAX = N * N + 1
 
-answer = nil
-answer = M if N >= M
+answer = MAX
 
-answer ||= if M.prime?
-             M + 1
-           else
-             M
-           end
+1.upto(N) do |a|
+  b = Rational(M, a).ceil
 
-primes = answer.prime_division
-zzz = 1
-primes[1..].each { |x| zzz *= x[0] }
+  break if b < a
+  next if b > N
 
-if (primes.first[0] * primes.last[0]) > N && zzz > N
-  puts(-1)
-else
-  puts(answer)
+  answer = [a * b, answer].min
 end
+
+puts((answer == MAX) ? -1 : answer)
