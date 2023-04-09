@@ -1,0 +1,4 @@
+3 6
+TTT..T
+.TTT..
+TTTTTT
