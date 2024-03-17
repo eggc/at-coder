@@ -9,14 +9,11 @@ def build(array)
   n = array.size
   result = Set.new
 
-  (2**n).times do |flag|
-    sum = 0
-
-    n.times do |i|
-      sum += array[i] if flag[i] == 1
+  0.upto(n).each do |i|
+    array.combination(i) do |combi|
+      sum = combi.sum
+      result << sum if sum <= K
     end
-
-    result << sum if sum <= K
   end
 
   result
